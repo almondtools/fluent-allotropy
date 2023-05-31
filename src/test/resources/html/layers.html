@@ -1,0 +1,36 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		.container {border:solid;1px;margin:2px;}
+		.box {height:30px;width:100px;}
+		.back {background:lightblue;}
+		.front {background:red;}
+	</style>
+</head>
+<body>
+	<div id="defaultLayering" class="container">
+		<div class="box back"> </div>
+		<div style="margin-left:10px;margin-top:-10px" class="box front"> </div>
+	</div>
+	<div id="absoluteLayering" class="container" style="position:relative;height:50px">
+		<div class="box back" style="position:absolute;top:10px"> </div>
+		<div class="box front" style="position:absolute;left:10px;top:20px"> </div>
+	</div>
+	<div id="zIndexLayering" class="container" style="position:relative;height:50px">
+		<div class="box front" style="position:absolute;top:10px;z-index:1"> </div>
+		<div class="box back" style="position:absolute;left:10px;top:20px"> </div>
+	</div>
+	<div id="stackedContextsLayering" class="container" style="position:relative;height:50px">
+		<div style="position:relative;z-index:2">
+			<div class="box front" style="position:absolute;top:10px"> </div>
+		</div>
+		<div style="position:relative;z-index:1">
+			<div class="box back" style="position:absolute;left:10px;top:20px;z-index:5"> </div>
+		</div>
+	</div>
+	<div id="independent" class="container">
+		<div class="box back"> </div>
+		<div class="box front"> </div>
+	</div>
+</body>

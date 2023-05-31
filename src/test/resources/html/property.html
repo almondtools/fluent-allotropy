@@ -1,0 +1,30 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		div#absent div {background:yellow}
+		div#absent div {background:red}
+		div#present div {background:yellow}
+		div#present div {background:green}
+	</style>
+</head>
+<body>
+	<div id="absent">
+		<div id="displayNone" style="display:none">Text</div>
+		<div id="visibilityHidden" style="visibility:hidden">Text</div>
+		<div id="visibilityCollapse" style="visibility:collapse">Text</div>
+		<div id="noWidth" style="position:absolute;width:0;overflow:hidden;">Text</div>
+		<div id="noHeight" style="position:absolute;height:0;overflow:hidden;">Text</div>
+		<div id="transparent" style="opacity:0">Text</div>
+		<div id="outOfView" style="position:absolute;left:-1000px">Text</div>
+		<div style="display:none">
+			<div id="nestedDisplayNone">Text</div>
+		</div>
+	</div>
+	<div id="present">
+		<div id="default">Text</div>
+		<div style="width:100px;height:100px;overflow:scroll;position:relative">
+			<div id="justScrolled" style="position:absolute;left:120px">Text</div>
+		</div>
+	</div>
+</body>

@@ -1,0 +1,94 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+    id("io.github.gradle-nexus.publish-plugin") version "2.0.0-rc-1"
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+}
+
+configurations {
+    examplesImplementation.extendsFrom testImplementation
+}
+
+sourceSets {
+    examples {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/examples/java')
+        }
+        resources.srcDir file('src/examples/resources')
+    }
+}
+
+dependencies {
+    api 'org.assertj:assertj-core:3.24.2'
+    api 'org.seleniumhq.selenium:selenium-java:4.12.1'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.5.3'
+    testImplementation 'org.junit.platform:junit-platform-engine:1.10.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testImplementation 'io.undertow:undertow-core:2.3.7.Final'
+    testImplementation 'ch.qos.logback:logback-classic:1.4.8'
+    testImplementation 'org.slf4j:jul-to-slf4j:2.0.7'
+}
+
+group = 'net.amygdalum'
+version = '0.0.1-SNAPSHOT'
+description = 'net.amygdalum:fluent-allotropy'
+java.sourceCompatibility = JavaVersion.VERSION_20
+
+nexusPublishing {
+    repositories {
+        sonatype()
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from(components.java)
+            
+	        pom {
+		        name = 'Fluent-Allotropy'
+		        description = 'A Fluent Assertion Framework for Allotropy (Testing Responsive Layouts)'
+		        url = 'https://github.com/almondtools/fluent-allotropy'
+	            licenses {
+	                license {
+			            name = 'GNU LESSER GENERAL PUBLIC LICENSE (LGPL)'
+	        		    url = 'http://www.gnu.org/licenses/lgpl.txt'
+	                }
+	            }
+	            developers {
+	                developer {
+			            id = 'amygdalum'
+	        		    name = 'Stefan Mandel'
+			            email = 'mail@amygdalum.net'
+	                }
+	            }
+	            scm {
+					connection = 'scm:git:git@github.com:almondtools/fluent-allotropy.git'
+					developerConnection = 'scm:git:git@github.com:almondtools/fluent-allotropy.git'
+					url = 'git@github.com:almondtools/fluent-allotropy.git'
+	            }
+	        }
+        }
+    }
+}
+
+signing {
+	sign publishing.publications.mavenJava
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8'
+}
