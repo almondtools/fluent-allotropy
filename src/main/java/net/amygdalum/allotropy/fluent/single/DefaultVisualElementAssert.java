@@ -22,8 +22,8 @@ public class DefaultVisualElementAssert<T extends VisualElement> implements Visu
         this.subject = subject;
     }
 
-    public NearAssert<T> near() {
-        return new DefaultNearAssert<>(subject);
+    public AtAssert<T> at() {
+        return new DefaultAtAssert<>(subject);
     }
 
     @Override

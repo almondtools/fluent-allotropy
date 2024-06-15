@@ -11,14 +11,14 @@ import net.amygdalum.allotropy.fluent.distances.DistanceResolver;
 import net.amygdalum.allotropy.fluent.elements.VisualElement;
 import net.amygdalum.allotropy.fluent.precision.Precision;
 
-public class DefaultNearAssert<T extends VisualElement> implements NearAssert<T> {
+public class DefaultAtAssert<T extends VisualElement> implements AtAssert<T> {
 
     private T subject;
     private DistanceConstraint distanceConstraint;
     private DistanceResolver distanceResolver;
     private Precision precision;
 
-    public DefaultNearAssert(T subject) {
+    public DefaultAtAssert(T subject) {
         this.subject = subject;
         this.distanceConstraint = DistanceConstraint.NONE;
         this.distanceResolver = DistanceResolver.DEFAULT;
@@ -30,7 +30,7 @@ public class DefaultNearAssert<T extends VisualElement> implements NearAssert<T>
         Distance dist = distanceResolver.resolveDistance(subject, object)
             .orElseThrow(() -> expected(subject)
                 .and(object)
-                .toBe("near")
+                .toBe(distanceResolver.description())
                 .butWere("overlapping or skew")
                 .asAssertionError());
         if (!distanceConstraint.test(dist)) {
@@ -48,19 +48,26 @@ public class DefaultNearAssert<T extends VisualElement> implements NearAssert<T>
     }
 
     @Override
-    public NearAssert<T> to(CardinalDirection direction) {
+    public AtAssert<T> to(CardinalDirection direction) {
+        if (!narrowableTo(direction)) {
+            throw new IllegalArgumentException("cannot combine " + distanceResolver.description() + " with direction " + direction.label());
+        }
         this.distanceResolver = new DistanceResolver(direction);
         return this;
     }
 
+    private boolean narrowableTo(CardinalDirection direction) {
+        return distanceResolver.directions().contains(direction);
+    }
+
     @Override
-    public NearAssert<T> about(DistanceConstraint distanceConstraint) {
+    public AtAssert<T> about(DistanceConstraint distanceConstraint) {
         this.distanceConstraint = distanceConstraint.withPrecision(precision);
         return this;
     }
 
     @Override
-    public NearAssert<T> withPrecision(Precision precision) {
+    public AtAssert<T> withPrecision(Precision precision) {
         if (distanceConstraint == DistanceConstraint.NONE) {
             this.precision = precision;
         } else {

@@ -14,7 +14,7 @@ import net.amygdalum.allotropy.fluent.canvas.CanvasExtension;
 import net.amygdalum.allotropy.fluent.canvas.Print;
 
 @ExtendWith(CanvasExtension.class)
-class NearAssertTest {
+class AtAssertTest {
 
     @Canvas(print = true)
     public AsciiCanvas canvas;
@@ -31,16 +31,16 @@ class NearAssertTest {
             """)
         void success() {
             expect(canvas.rect(1, 2, 2, 3))
-                .near().top()
+                .at().top()
                 .of(canvas.rect(2, 5, 4, 6));
             expect(canvas.rect(1, 2, 2, 3))
-                .near().top().about(1).pixels()
+                .at().top().about(1).pixels()
                 .of(canvas.rect(2, 5, 4, 6));
             expect(canvas.rect(1, 2, 2, 3))
                 .above().about(1).pixels()
                 .of(canvas.rect(2, 5, 4, 6));
             expect(canvas.rect(1, 2, 2, 3))
-                .near().about(1).pixels()
+                .at().about(1).pixels()
                 .of(canvas.rect(2, 5, 4, 6));
             expect(canvas.rect(1, 2, 2, 3))
                 .above().less(2).pixels()
@@ -63,9 +63,9 @@ class NearAssertTest {
             """)
         void butWasOverlapping() {
             AssertionError e = assertThrows(AssertionError.class, () -> expect(canvas.rect(1, 2, 3, 4))
-                .near().top().about(1).pixels()
+                .at().top().about(1).pixels()
                 .of(canvas.rect(2, 3, 4, 6)));
-            assertThat(e).hasMessage("expected [1, 2] => [3, 4] and [2, 3] => [4, 6] to be near but were overlapping or skew.");
+            assertThat(e).hasMessage("expected [1, 2] => [3, 4] and [2, 3] => [4, 6] to be at top but were overlapping or skew.");
         }
 
     }
@@ -83,16 +83,16 @@ class NearAssertTest {
             """)
         void success() {
             expect(canvas.rect(1, 5, 6, 6))
-                .near().bottom()
+                .at().bottom()
                 .of(canvas.rect(1, 1, 3, 3));
             expect(canvas.rect(1, 5, 6, 6))
-                .near().bottom().about(1).pixels()
+                .at().bottom().about(1).pixels()
                 .of(canvas.rect(1, 1, 3, 3));
             expect(canvas.rect(1, 5, 6, 6))
                 .below().about(1).pixels()
                 .of(canvas.rect(1, 1, 3, 3));
             expect(canvas.rect(1, 5, 6, 6))
-                .near().about(1).pixels()
+                .at().about(1).pixels()
                 .of(canvas.rect(1, 1, 3, 3));
         }
 
@@ -107,7 +107,7 @@ class NearAssertTest {
             """)
         void withPrecision() {
             expect(canvas.rect(1, 5, 6, 6))
-                .near().withPrecision(1).pixels()
+                .at().withPrecision(1).pixels()
                 .bottom().about(2).pixels()
                 .of(canvas.rect(1, 1, 3, 3));
         }
@@ -120,9 +120,9 @@ class NearAssertTest {
             """)
         void butWasSkew() {
             AssertionError e = assertThrows(AssertionError.class, () -> expect(canvas.rect(5, 1, 8, 3))
-                .near().bottom().about(1).pixels()
+                .at().bottom().about(1).pixels()
                 .of(canvas.rect(1, 1, 3, 3)));
-            assertThat(e).hasMessage("expected [5, 1] => [8, 3] and [1, 1] => [3, 3] to be near but were overlapping or skew.");
+            assertThat(e).hasMessage("expected [5, 1] => [8, 3] and [1, 1] => [3, 3] to be at bottom but were overlapping or skew.");
         }
 
     }
@@ -139,16 +139,16 @@ class NearAssertTest {
             """)
         void success() {
             expect(canvas.rect(1, 1, 2, 2))
-                .near().left()
+                .at().left()
                 .of(canvas.rect(4, 1, 5, 5));
             expect(canvas.rect(1, 1, 2, 2))
-                .near().left().about(1).pixels()
+                .at().left().about(1).pixels()
                 .of(canvas.rect(4, 1, 5, 5));
             expect(canvas.rect(1, 1, 2, 2))
                 .left().about(1).pixels()
                 .of(canvas.rect(4, 1, 5, 5));
             expect(canvas.rect(1, 1, 2, 2))
-                .near().about(1).pixels()
+                .at().about(1).pixels()
                 .of(canvas.rect(4, 1, 5, 5));
         }
 
@@ -162,9 +162,9 @@ class NearAssertTest {
             """)
         void butWasRight() {
             AssertionError e = assertThrows(AssertionError.class, () -> expect(canvas.rect(4, 1, 5, 5))
-                .near().left()
+                .at().left()
                 .of(canvas.rect(1, 1, 2, 2)));
-            assertThat(e).hasMessage("expected [4, 1] => [5, 5] and [1, 1] => [2, 2] to be near but were overlapping or skew.");
+            assertThat(e).hasMessage("expected [4, 1] => [5, 5] and [1, 1] => [2, 2] to be at left but were overlapping or skew.");
 
         }
 
@@ -181,16 +181,16 @@ class NearAssertTest {
             """)
         void success() {
             expect(canvas.rect(4, 2, 6, 4))
-                .near().right()
+                .at().right()
                 .of(canvas.rect(1, 1, 2, 2));
             expect(canvas.rect(4, 2, 6, 4))
-                .near().right().about(1).pixels()
+                .at().right().about(1).pixels()
                 .of(canvas.rect(1, 1, 2, 2));
             expect(canvas.rect(4, 2, 6, 4))
                 .right().about(1).pixels()
                 .of(canvas.rect(1, 1, 2, 2));
             expect(canvas.rect(4, 2, 6, 4))
-                .near().about(1).pixels()
+                .at().about(1).pixels()
                 .of(canvas.rect(1, 1, 2, 2));
         }
 
@@ -206,7 +206,7 @@ class NearAssertTest {
             """)
         void butWasToFar() {
             AssertionError e = assertThrows(AssertionError.class, () -> expect(canvas.rect(5, 5, 7, 7))
-                .near().right().about(1).pixels()
+                .at().right().about(1).pixels()
                 .of(canvas.rect(1, 1, 2, 2)));
             assertThat(e).hasMessage("expected [5, 5] => [7, 7] to have distance of 1px to [1, 1] => [2, 2] at right but found 2px.");
 

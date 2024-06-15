@@ -19,27 +19,27 @@ import net.amygdalum.allotropy.fluent.multiple.VisualElementsAssert;
 
 public interface VisualElementAssert<T extends VisualElement> extends Assert {
 
-    default NearAssert<T> above() {
-        return near()
+    default AtAssert<T> above() {
+        return at()
             .top();
     }
 
-    default NearAssert<T> below() {
-        return near()
+    default AtAssert<T> below() {
+        return at()
             .bottom();
     }
 
-    default NearAssert<T> left() {
-        return near()
+    default AtAssert<T> left() {
+        return at()
             .left();
     }
 
-    default NearAssert<T> right() {
-        return near()
+    default AtAssert<T> right() {
+        return at()
             .right();
     }
 
-    NearAssert<T> near();
+    AtAssert<T> at();
 
     InsideAssert<T> inside();
 

@@ -1,5 +1,6 @@
 package net.amygdalum.allotropy.fluent.distances;
 
+import static java.util.stream.Collectors.joining;
 import static net.amygdalum.allotropy.fluent.directions.CardinalDirection.E;
 import static net.amygdalum.allotropy.fluent.directions.CardinalDirection.N;
 import static net.amygdalum.allotropy.fluent.directions.CardinalDirection.S;
@@ -49,6 +50,15 @@ public record DistanceResolver(Set<CardinalDirection> directions) {
         } else {
             return Optional.empty();
         }
+    }
+
+    public String description() {
+        if (directions.size() == CardinalDirection.values().length) {
+            return "near";
+        }
+        return "at " + directions.stream()
+            .map(d -> d.label())
+            .collect(joining(" or "));
     }
 
 }
