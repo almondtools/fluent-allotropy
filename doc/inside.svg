@@ -12,7 +12,6 @@
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns:xhtml="http://www.w3.org/1999/xhtml">
@@ -28,12 +27,13 @@
      inkscape:zoom="8.8139535"
      inkscape:cx="100.52243"
      inkscape:cy="64.5"
-     inkscape:window-width="2400"
-     inkscape:window-height="1261"
-     inkscape:window-x="-9"
-     inkscape:window-y="122"
+     inkscape:window-width="2560"
+     inkscape:window-height="1351"
+     inkscape:window-x="2391"
+     inkscape:window-y="-9"
      inkscape:window-maximized="1"
-     inkscape:current-layer="switch8" />
+     inkscape:current-layer="svg12"
+     showgrid="false" />
   <defs
      id="defs1" />
   <g
@@ -227,22 +227,4 @@
       </switch>
     </g>
   </g>
-  <switch
-     id="switch12">
-    <g
-       requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
-       id="g12" />
-    <a
-       transform="translate(0,-5)"
-       xlink:href="https://www.drawio.com/doc/faq/svg-export-text-problems"
-       target="_blank"
-       id="a12">
-      <text
-         text-anchor="middle"
-         font-size="10px"
-         x="50%"
-         y="100%"
-         id="text12">Text is not SVG - cannot display</text>
-    </a>
-  </switch>
 </svg>

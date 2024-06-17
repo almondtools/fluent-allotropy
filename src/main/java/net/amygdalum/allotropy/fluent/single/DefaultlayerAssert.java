@@ -1,7 +1,7 @@
 package net.amygdalum.allotropy.fluent.single;
 
 import static net.amygdalum.allotropy.fluent.directions.LayerRelation.BEHIND;
-import static net.amygdalum.allotropy.fluent.directions.LayerRelation.INFRONT;
+import static net.amygdalum.allotropy.fluent.directions.LayerRelation.FRONT;
 import static net.amygdalum.allotropy.fluent.utils.AssertionErrors.expected;
 
 import net.amygdalum.allotropy.fluent.directions.LayerRelation;
@@ -22,7 +22,7 @@ public class DefaultlayerAssert<T extends VisualElement> implements LayerAssert<
     public AndAssert<T> ofElement(VisualElement object) {
         if (subject instanceof LayerableElement s && object instanceof LayerableElement o) {
             int comparison = s.layer().compareTo(o.layer());
-            if (comparison < 0 && relation == INFRONT
+            if (comparison < 0 && relation == FRONT
                 || comparison > 0 && relation == BEHIND) {
                 throw expected(subject)
                     .__(relation.label())

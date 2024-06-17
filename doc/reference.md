@@ -185,40 +185,208 @@ Specify two objects overlapping
       .with(image);
 
 ## Layers (2)
+`behind()` and `front()` allow to specify the relative position in the stack of shapes.
 
-### Behind and InFront
+### Behind and Front
+`behind()` specifies that the subject is behind the object. The subject may be (partially) hidden by the object.
+`front()` specifies that the subject is in front of the object. The object may be (partially) hidden by the subject.
+
+Specify on object to be visible and the other to be partially hidden
+
+![Behind Front](behind-front.svg)
+
+    expect(image)
+      .behind()
+      .of(description);
+    expect(description)
+      .front()
+      .of(image);
+
 
 ## Size (1, 2)
+`width()` and `height()` allow to specify absolute or relative size of a shape.
 
 ### Height
+`height()` specifies the height of a shape, either absolute or relative to another.
+
+Specify the absolute height of an shape
+
+![height](height.svg)
+
+    expect(button)
+      .height().equal(25).pixels();
 
 ### Width
+`width()` specifies the width of a shape, either absolute or relative to another.
+
+Specify the width of an object relative to another
+
+![width](width.svg)
+
+    expect(text)
+      .width().equal(200).percentOf(image);
 
 ## Visibility (1, *)
+`isAbsent()` and `isPresent()` (`areAbsent()` and `arePresent()`) allow to specify whether a shape is visible to the user or not. 
+
+A share is absent, if
+
+- it is not in the dom
+- it is of style `display:none`
+- it is of style `visibility:hidden` or `visibility:collapse`
+- it has no width or no height
+- it is completely transparent
+- it is outside the viewable area
+- it is inside a parent that is absent
 
 ### Absent
+`isAbsent()` and `areAbsent()` allow specifying that an item or some items are not visible to the viewer.
 
-### Visible
+    expect(comments)
+      .isAbsent();
+
+### Present
+`isPresent()` and `arePresent()` allow specifying that an item or some items are visible to the viewer.
+
+    expect(comments)
+      .isPresent();
 
 ## Text (1)
+`text()` allows to specify contents in text. 
 
-### ...
+### equalTo
+`contains()` specifies the exact text content
 
-## CSS Properties (1)
+    expect(button)
+      .text().equals("Ok")
 
-### ...
+### contains
+`contains()` specifies which phrases should be contained in the text
 
-## Properties (1, *)
+Expect the element to contain some key words
+
+    expect(column)
+      .text().contains("important")
+      
+### contains
+`containsNot()` specifies which phrases should not be contained in the text
+
+Expect the element not containing dummy text
+
+    expect(column)
+      .text().containsNot("Lorem Ipsum")
+
+### startsWith
+`startsWith()` specifies the prefix of the text
+
+Specify an element to start with a certain text
+
+    expect(fairyTale)
+      .text().startsWith("Once upon a time")
+
+### endsWith
+`endsWith()` specifies the suffix of the text
+
+Specify an element to end with a certain text
+
+    expect(sentence)
+      .text().endsWith(".")
+
+## Collection Properties (*)
 
 ### Count
+`count()` allows the number of items that where captured in a variable
 
-## Multi-Item Constraints
+![count](count.svg)
+
+    expect(items)
+      .width().count().equal(4);
+
+
+## Single Properties (1)
+
+### effectiveStyle
+`effectiveStyle()` allows allows to specify certain effective (computed) css properties. 
+
+    expect(item1)
+      .effectiveStyle()
+      .attribute("font-size").is("18px");
+    expect(item1)
+      .effectiveStyle()
+      .attribute("font-family").contains("Helvetica");
+
+## Collection Processing (1,*)
 
 ### Each
+`each()` allows allows to specify constraints on each element of the collection.
 
+Specify that each item has a certain height
+
+![each](each.svg)
+
+    expect(items)
+      .each(item -> item.height().equal(20).pixels());
+ 
 ### Select
+`select()` allows allows to specify constraints on a sub collection of the collection.
+
+Specify that each div item has a certain height
+
+![select](select.svg)
+
+    expect(items)
+      .select(
+        i -> i.findElement(tagName("div")),
+        is -> is.each(item -> item.height().equal(20).pixels()));
 
 ### Sorted
+`sorted()` allows to sort a collection before applying constraints. This is useful if the physical order deviates from the logical order.
+
+Specify that each element in the correct order is aligned with equal vertical distance
+
+![sorted](sorted.svg)
+
+    expect(item1, item2, item3)                                  // not sorted
+      .sorted((e1, e2) -> e1.bounds().top() - e2.bounds().top()) // sort by top line
+      .alignedHorizontally()
+      .all()
+      .equallyDistanced()
+      .withEachOther();
 
 ### Chunked
+`chunked()` transforms a collection into a collection of sub collections and allows to specify constraints on each sub collection.
 
+Specify that every batch of 2 elements are aligned
+
+![chunked](chunked.svg)
+
+    expect(item1, item2, item3, item4)
+      .chunked(sized(2), e -> e.alignedHorizontally().withEachOther());
+
+### Spread
+`spread()` allows to specify constraints on selected elements of the subject.
+
+Specify that there are a certain number of div sub items
+
+![spread](spread.svg)
+
+    expect(container)
+      .spread(
+        i -> i.findElements(tagName("div")).toArray(new WebVisualElement[0]), 
+        e -> e.count().equal(2));
+
+## Conjunction
+
+### And
+
+Most expectations on one or multiple subjects can be continued by appending an `and()`
+
+## Adverbials
+
+### Precision
+
+TODO
+
+### Comparisons
+
+TODO

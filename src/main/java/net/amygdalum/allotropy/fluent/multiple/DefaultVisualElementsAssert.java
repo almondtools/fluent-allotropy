@@ -5,12 +5,14 @@ import static net.amygdalum.allotropy.fluent.Expectations.expectElements;
 import static net.amygdalum.allotropy.fluent.dimensions.Dimension.HORIZONTAL;
 import static net.amygdalum.allotropy.fluent.dimensions.Dimension.VERTICAL;
 import static net.amygdalum.allotropy.fluent.utils.Arrays.toArray;
+import static net.amygdalum.allotropy.fluent.utils.AssertionErrors.expected;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import net.amygdalum.allotropy.fluent.common.Constraint;
 import net.amygdalum.allotropy.fluent.elements.VisualElement;
 import net.amygdalum.allotropy.fluent.single.VisualElementAssert;
 
@@ -30,6 +32,19 @@ public class DefaultVisualElementsAssert<T extends VisualElement> implements Vis
     @Override
     public AlignedAssert<T> alignedHorizontally() {
         return new DefaultAlignedAssert<>(subjects, HORIZONTAL);
+    }
+
+    @Override
+    public AndAssert<T> property(Constraint<VisualElement> condition) {
+        for (var subject : subjects) {
+            if (!condition.test(subject)) {
+                throw expected(subject)
+                    .toBe(condition.description())
+                    .butWas("not")
+                    .asAssertionError();
+            }
+        }
+        return new DefaultAndAssert<>(subjects);
     }
 
     @Override

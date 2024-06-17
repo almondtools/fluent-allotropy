@@ -25,6 +25,22 @@ public class Chunks {
         };
     }
 
+    public static <T extends VisualElement> Function<T[], T[][]> sized(int size) {
+        return t -> {
+            List<T[]> result = new ArrayList<>();
+            int start = 0;
+            while (start < t.length) {
+                var end = t.length <= start + size
+                    ? t.length
+                    : start + size;
+                T[] window = Arrays.copyOfRange(t, start, end);
+                result.add(window);
+                start = end;
+            }
+            return result.toArray(i -> newArray(t, i));
+        };
+    }
+
     public static <T extends VisualElement> T[][] newArray(T[] element, int i) {
         @SuppressWarnings("unchecked")
         T[][] array = (T[][]) Array.newInstance(element.getClass(), i);

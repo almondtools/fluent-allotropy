@@ -3,7 +3,7 @@ package net.amygdalum.allotropy.fluent.single;
 import static net.amygdalum.allotropy.fluent.dimensions.Dimension.HORIZONTAL;
 import static net.amygdalum.allotropy.fluent.dimensions.Dimension.VERTICAL;
 import static net.amygdalum.allotropy.fluent.directions.LayerRelation.BEHIND;
-import static net.amygdalum.allotropy.fluent.directions.LayerRelation.INFRONT;
+import static net.amygdalum.allotropy.fluent.directions.LayerRelation.FRONT;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -51,8 +51,8 @@ public interface VisualElementAssert<T extends VisualElement> extends Assert {
 
     ContainsAssert<T> contains();
 
-    default LayerAssert<T> inFront() {
-        return layered(INFRONT);
+    default LayerAssert<T> front() {
+        return layered(FRONT);
     }
 
     default LayerAssert<T> behind() {

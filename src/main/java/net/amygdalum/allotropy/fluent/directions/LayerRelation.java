@@ -1,7 +1,7 @@
 package net.amygdalum.allotropy.fluent.directions;
 
 public enum LayerRelation {
-    INFRONT("in front"), BEHIND("behind");
+    FRONT("in front"), BEHIND("behind");
 
     private String label;
 

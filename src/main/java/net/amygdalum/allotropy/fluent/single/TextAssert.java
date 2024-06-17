@@ -5,6 +5,7 @@ import java.util.function.Function;
 import net.amygdalum.allotropy.fluent.common.Assert;
 import net.amygdalum.allotropy.fluent.elements.VisualElement;
 import net.amygdalum.allotropy.fluent.text.ContainsConstraint;
+import net.amygdalum.allotropy.fluent.text.ContainsNotConstraint;
 import net.amygdalum.allotropy.fluent.text.EndsWithConstraint;
 import net.amygdalum.allotropy.fluent.text.EqualsConstraint;
 import net.amygdalum.allotropy.fluent.text.StartsWithConstraint;
@@ -22,6 +23,10 @@ public interface TextAssert<T extends VisualElement> extends Assert {
 
     default QuitableTextAssert<T> contains(String infix) {
         return satisfies(ContainsConstraint.contains(infix));
+    }
+
+    default QuitableTextAssert<T> containsNot(String infix) {
+        return satisfies(ContainsNotConstraint.containsNot(infix));
     }
 
     default QuitableTextAssert<T> equalTo(String text) {

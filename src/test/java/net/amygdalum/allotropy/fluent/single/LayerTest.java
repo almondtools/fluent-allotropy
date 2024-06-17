@@ -27,7 +27,7 @@ class LayerTest {
         WebElement b = driver.findElement(By.cssSelector("#defaultLayering .back"));
         WebElement f = driver.findElement(By.cssSelector("#defaultLayering .front"));
         expect(b).behind().of(f);
-        expect(f).inFront().of(b);
+        expect(f).front().of(b);
     }
 
     @Test
@@ -37,7 +37,7 @@ class LayerTest {
         WebElement b = driver.findElement(By.cssSelector("#absoluteLayering .back"));
         WebElement f = driver.findElement(By.cssSelector("#absoluteLayering .front"));
         expect(b).behind().of(f);
-        expect(f).inFront().of(b);
+        expect(f).front().of(b);
     }
 
     @Test
@@ -47,7 +47,7 @@ class LayerTest {
         WebElement b = driver.findElement(By.cssSelector("#zIndexLayering .back"));
         WebElement f = driver.findElement(By.cssSelector("#zIndexLayering .front"));
         expect(b).behind().of(f);
-        expect(f).inFront().of(b);
+        expect(f).front().of(b);
     }
 
     @Test
@@ -57,7 +57,7 @@ class LayerTest {
         WebElement b = driver.findElement(By.cssSelector("#stackedContextsLayering .back"));
         WebElement f = driver.findElement(By.cssSelector("#stackedContextsLayering .front"));
         expect(b).behind().of(f);
-        expect(f).inFront().of(b);
+        expect(f).front().of(b);
     }
 
     @Test
@@ -73,7 +73,7 @@ class LayerTest {
             .contains("] behind of [")
             .endsWith("] but was not.");
 
-        e = assertThrows(AssertionError.class, () -> expect(b).inFront().of(f));
+        e = assertThrows(AssertionError.class, () -> expect(b).front().of(f));
         assertThat(e.getMessage())
             .startsWith("expected [")
             .contains("] in front of [")
@@ -93,7 +93,7 @@ class LayerTest {
             .contains("] behind of [")
             .endsWith("] but was independent.");
 
-        e = assertThrows(AssertionError.class, () -> expect(b).inFront().of(f));
+        e = assertThrows(AssertionError.class, () -> expect(b).front().of(f));
         assertThat(e.getMessage())
             .startsWith("expected [")
             .contains("] in front of [")

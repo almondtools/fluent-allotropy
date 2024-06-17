@@ -30,6 +30,7 @@ class TextTest {
             .startsWith("Here")
             .contains("is some")
             .endsWith("text.")
+            .containsNot("Text")
             .and()
             .text()
             .equalTo("Here is some text.");
@@ -83,6 +84,18 @@ class TextTest {
             assertThat(error.getMessage())
                 .startsWith("expected [")
                 .endsWith(" to have text containing \"Text\" but was \"Here is some text.\".");
+        }
+
+        @Test
+        void containsNot() {
+            driver.navigate().to(server.url("/text.html"));
+            WebElement compound = driver.findElement(By.cssSelector("#with-text"));
+            AssertionError error = assertThrows(AssertionError.class, () -> expect(compound)
+                .text()
+                .containsNot("some text"));
+            assertThat(error.getMessage())
+                .startsWith("expected [")
+                .endsWith(" to have text not containing \"some text\" but was \"Here is some text.\".");
         }
 
         @Test
