@@ -2,8 +2,11 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
+    id("com.github.ben-manes.versions") version "0.51.0"
     id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
 }
+
+apply plugin: "com.github.ben-manes.versions"
 
 repositories {
     mavenLocal()
@@ -28,14 +31,14 @@ sourceSets {
 }
 
 dependencies {
-    api 'org.assertj:assertj-core:3.24.2'
-    api 'org.seleniumhq.selenium:selenium-java:4.12.1'
-    testImplementation 'io.github.bonigarcia:webdrivermanager:5.5.3'
-    testImplementation 'org.junit.platform:junit-platform-engine:1.10.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
-    testImplementation 'io.undertow:undertow-core:2.3.7.Final'
-    testImplementation 'ch.qos.logback:logback-classic:1.4.13'
-    testImplementation 'org.slf4j:jul-to-slf4j:2.0.7'
+    api 'org.assertj:assertj-core:3.26.0'
+    api 'org.seleniumhq.selenium:selenium-java:4.22.0'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.9.1'
+    testImplementation 'org.junit.platform:junit-platform-engine:1.10.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.3'
+    testImplementation 'io.undertow:undertow-core:2.3.14.Final'
+    testImplementation 'ch.qos.logback:logback-classic:1.5.6'
+    testImplementation 'org.slf4j:jul-to-slf4j:2.0.13'
 }
 
 group = 'net.amygdalum'
