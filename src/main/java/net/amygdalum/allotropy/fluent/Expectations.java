@@ -3,6 +3,7 @@ package net.amygdalum.allotropy.fluent;
 import static net.amygdalum.allotropy.fluent.utils.Arrays.toArray;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.openqa.selenium.WebElement;
 
@@ -29,6 +30,20 @@ public class Expectations {
 
     public static <T extends VisualElement> VisualElementAssert<T> expectElement(T subject) {
         return new DefaultVisualElementAssert<>(subject);
+    }
+
+    public static VisualElementsAssert<WebVisualElement> expect(List<? extends Object> subjects) {
+        return expectElements(Arrays.stream(subjects.toArray())
+            .map(s -> {
+                if (s instanceof WebElement e) {
+                    return new WebVisualElement(e);
+                } else if (s instanceof AsVisualElement<?> e) {
+                    return e.asVisualElement();
+                } else {
+                    throw new IllegalArgumentException("expected list of web elements or visual elements, but got " + s.getClass().getSimpleName());
+                }
+            })
+            .toArray(WebVisualElement[]::new));
     }
 
     public static VisualElementsAssert<WebVisualElement> expect(WebElement... subjects) {

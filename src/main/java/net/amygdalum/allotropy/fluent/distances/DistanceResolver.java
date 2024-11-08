@@ -1,18 +1,23 @@
 package net.amygdalum.allotropy.fluent.distances;
 
 import static java.util.stream.Collectors.joining;
+import static net.amygdalum.allotropy.fluent.dimensions.Dimension.HORIZONTAL;
+import static net.amygdalum.allotropy.fluent.dimensions.Dimension.VERTICAL;
 import static net.amygdalum.allotropy.fluent.directions.CardinalDirection.E;
 import static net.amygdalum.allotropy.fluent.directions.CardinalDirection.N;
 import static net.amygdalum.allotropy.fluent.directions.CardinalDirection.S;
 import static net.amygdalum.allotropy.fluent.directions.CardinalDirection.W;
 import static net.amygdalum.allotropy.fluent.elements.VisualOperand.op;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.Set;
 import java.util.stream.DoubleStream;
 import java.util.stream.DoubleStream.Builder;
 
+import net.amygdalum.allotropy.fluent.dimensions.Dimension;
 import net.amygdalum.allotropy.fluent.directions.CardinalDirection;
 import net.amygdalum.allotropy.fluent.elements.VisualElement;
 import net.amygdalum.allotropy.fluent.elements.VisualOperand;
@@ -21,8 +26,19 @@ public record DistanceResolver(Set<CardinalDirection> directions) {
 
     public static final DistanceResolver DEFAULT = new DistanceResolver(N, E, S, W);
 
-    public DistanceResolver(CardinalDirection ... directions) {
+    public DistanceResolver(CardinalDirection... directions) {
         this(Set.of(directions));
+    }
+
+    public List<Dimension> dimensions() {
+        List<Dimension> dimensions = new ArrayList<>(2);
+        if (directions.contains(N) || directions.contains(S)) {
+            dimensions.add(VERTICAL);
+        }
+        if (directions.contains(E) || directions.contains(W)) {
+            dimensions.add(HORIZONTAL);
+        }
+        return dimensions;
     }
 
     public Optional<Distance> resolveDistance(VisualElement subject, VisualElement object) {

@@ -23,16 +23,15 @@ public class Document {
     public static Document from(JavascriptExecutor js) {
         return new Document(js);
     }
-    
+
     public WebElement elementFromPoint(double x, double y) {
-        return (WebElement) js.executeScript("return document.elementFromPoint(arguments[0], arguments[1]);", x,y);
+        return (WebElement) js.executeScript("return document.elementFromPoint(arguments[0], arguments[1]);", x, y);
     }
 
     public List<WebElement> elementsFromPoint(double x, double y) {
         @SuppressWarnings("unchecked")
-        List<WebElement> elements = (List<WebElement>) js.executeScript("return document.elementsFromPoint(arguments[0], arguments[1]);", x,y);
+        List<WebElement> elements = (List<WebElement>) js.executeScript("return document.elementsFromPoint(arguments[0], arguments[1]);", x, y);
         return elements;
     }
 
-    
 }

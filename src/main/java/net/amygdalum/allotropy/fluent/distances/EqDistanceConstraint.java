@@ -2,6 +2,8 @@ package net.amygdalum.allotropy.fluent.distances;
 
 import static net.amygdalum.allotropy.fluent.precision.Precision.exact;
 
+import java.util.function.Predicate;
+
 import net.amygdalum.allotropy.fluent.precision.Precision;
 
 public record EqDistanceConstraint(Precision precision, Distance distance) implements DistanceConstraint {
@@ -11,8 +13,8 @@ public record EqDistanceConstraint(Precision precision, Distance distance) imple
     }
 
     @Override
-    public boolean test(Distance dist) {
-        return precision.eq(distance.pixels(), dist.pixels());
+    public Predicate<Distance> inContext(AssertionContext context) {
+        return dist -> precision.eq(distance.pixels(context), dist.pixels(context));
     }
 
     @Override
@@ -21,8 +23,8 @@ public record EqDistanceConstraint(Precision precision, Distance distance) imple
     }
 
     @Override
-    public String description() {
-        return "of " + distance;
+    public String describeIn(AssertionContext context) {
+        return "of " + distance.describeIn(context);
     }
 
 }

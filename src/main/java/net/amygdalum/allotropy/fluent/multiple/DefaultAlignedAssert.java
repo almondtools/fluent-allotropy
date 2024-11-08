@@ -97,7 +97,9 @@ public class DefaultAlignedAssert<T extends VisualElement> implements AlignedAss
                     .aligned(dimension.adLabel())
                     .with("each other")
                     .__("equally distanced")
-                    .butFound("between").__(new PixelDistance(min)).and(new PixelDistance(max))
+                    .butFound("between")
+                    .__(new PixelDistance(min).describeIn(null))
+                    .and(new PixelDistance(max).describeIn(null))
                     .asAssertionError();
             }
         }

@@ -208,7 +208,9 @@ class AtAssertTest {
             AssertionError e = assertThrows(AssertionError.class, () -> expect(canvas.rect(5, 5, 7, 7))
                 .at().right().about(1).pixels()
                 .of(canvas.rect(1, 1, 2, 2)));
-            assertThat(e).hasMessage("expected [5, 5] => [7, 7] to have distance of 1px to [1, 1] => [2, 2] at right but found 2px.");
+            assertThat(e).hasMessage("expected [5, 5] => [7, 7] to have distance "
+                + "of 1px to [1, 1] => [2, 2] at right "
+                + "but found 2px.");
 
         }
 

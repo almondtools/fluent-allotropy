@@ -1,11 +1,12 @@
 package net.amygdalum.allotropy.fluent.single;
 
 import static java.util.stream.Collectors.joining;
-import static net.amygdalum.allotropy.fluent.directions.Directed.at;
 import static net.amygdalum.allotropy.fluent.directions.CardinalDirection.E;
 import static net.amygdalum.allotropy.fluent.directions.CardinalDirection.N;
 import static net.amygdalum.allotropy.fluent.directions.CardinalDirection.S;
 import static net.amygdalum.allotropy.fluent.directions.CardinalDirection.W;
+import static net.amygdalum.allotropy.fluent.directions.Directed.at;
+import static net.amygdalum.allotropy.fluent.distances.AssertionContext.ctx;
 import static net.amygdalum.allotropy.fluent.elements.VisualOperand.op;
 import static net.amygdalum.allotropy.fluent.precision.Precision.exact;
 import static net.amygdalum.allotropy.fluent.utils.AssertionErrors.expected;
@@ -60,6 +61,9 @@ public class DefaultInsideAssert<T extends VisualElement> implements InsideAsser
             at(W).distance(new PixelDistance(s.leftDistance(o))));
         List<Directed<Distance>> violatedConstraints = distances.stream()
             .filter(d -> insideConstraints.stream()
+                .map(c -> c.inContext(ctx()
+                    .dimension(d.dimension())
+                    .bounds(o.bounds())))
                 .filter(c -> c.test(d.direction()))
                 .findFirst()
                 .map(c -> !c.test(d.subject()))
@@ -70,10 +74,14 @@ public class DefaultInsideAssert<T extends VisualElement> implements InsideAsser
                 .insideOf(object)
                 .with("distance")
                 .__(insideConstraints.stream()
-                    .map(d -> d.description())
+                    .map(d -> d.describeIn(ctx()
+                        .direction(d.direction())
+                        .bounds(o.bounds())))
                     .collect(joining(", ")))
                 .butWas(violatedConstraints.stream()
-                    .map(d -> d.subject() + " " + d.direction().label())
+                    .map(d -> d.subject().describeIn(ctx()
+                        .dimension(d.dimension())
+                        .bounds(o.bounds())) + " " + d.direction().label())
                     .collect(joining(", ")))
                 .asAssertionError();
         }

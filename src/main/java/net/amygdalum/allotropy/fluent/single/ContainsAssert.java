@@ -28,7 +28,7 @@ public interface ContainsAssert<T extends VisualElement> extends Precisable<Cont
             .map(WebVisualElement::new)
             .collect(toArray()));
     }
-    
+
     default AndAssert<T> items(AsVisualElement<?>... items) {
         return itemElements(Arrays.stream(items)
             .map(i -> i.asVisualElement())

@@ -60,21 +60,17 @@ public interface AtAssert<T extends VisualElement> extends OfAssert<T>, Distance
         return to(N);
     }
 
-
     default AtAssert<T> right() {
         return to(E);
     }
-
 
     default AtAssert<T> bottom() {
         return to(S);
     }
 
-
     default AtAssert<T> left() {
         return to(W);
     }
-
 
     AtAssert<T> to(CardinalDirection direction);
 

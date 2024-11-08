@@ -2,6 +2,8 @@ package net.amygdalum.allotropy.fluent.distances;
 
 import static net.amygdalum.allotropy.fluent.precision.Precision.exact;
 
+import java.util.function.Predicate;
+
 import net.amygdalum.allotropy.fluent.precision.Precision;
 
 public record BetweenDistanceConstraint(Precision precision, Distance from, Distance to) implements DistanceConstraint {
@@ -11,9 +13,9 @@ public record BetweenDistanceConstraint(Precision precision, Distance from, Dist
     }
 
     @Override
-    public boolean test(Distance dist) {
-        return precision.le(from.pixels(), dist.pixels())
-            && precision.ge(to.pixels(), dist.pixels());
+    public Predicate<Distance> inContext(AssertionContext context) {
+        return dist -> precision.le(from.pixels(context), dist.pixels(context))
+            && precision.ge(to.pixels(context), dist.pixels(context));
     }
 
     @Override
@@ -22,8 +24,8 @@ public record BetweenDistanceConstraint(Precision precision, Distance from, Dist
     }
 
     @Override
-    public String description() {
-        return "between " + from + " and " + to;
+    public String describeIn(AssertionContext context) {
+        return "between " + from.describeIn(context) + " and " + to.describeIn(context);
     }
 
 }

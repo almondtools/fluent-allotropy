@@ -1,7 +1,10 @@
 package net.amygdalum.allotropy.fluent.distances;
 
+import static net.amygdalum.allotropy.fluent.distances.AssertionContext.ctx;
 import static net.amygdalum.allotropy.fluent.distances.EqDistanceConstraint.eq;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +14,8 @@ class EqDistanceConstraintTest {
 
     @Test
     void testTest() {
-        EqDistanceConstraint constraint = eq(new PixelDistance(2.0));
+        Predicate<Distance> constraint = eq(new PixelDistance(2.0))
+            .inContext(ctx());
 
         assertThat(constraint.test(new PixelDistance(1.9))).isEqualTo(false);
         assertThat(constraint.test(new PixelDistance(2.0))).isEqualTo(true);
@@ -20,7 +24,8 @@ class EqDistanceConstraintTest {
 
     @Test
     void testWithPrecision() {
-        EqDistanceConstraint constraint = eq(new PixelDistance(2.0)).withPrecision(new PixelPrecision(1));
+        Predicate<Distance> constraint = eq(new PixelDistance(2.0)).withPrecision(new PixelPrecision(1))
+            .inContext(ctx());
 
         assertThat(constraint.test(new PixelDistance(0.9))).isEqualTo(false);
         assertThat(constraint.test(new PixelDistance(1.0))).isEqualTo(true);
@@ -31,8 +36,8 @@ class EqDistanceConstraintTest {
 
     @Test
     void testDescription() {
-        assertThat(eq(new PixelDistance(2.0)).description()).isEqualTo("of 2px");
-        assertThat(eq(new PixelDistance(2.3)).description()).isEqualTo("of 2.3px");
+        assertThat(eq(new PixelDistance(2.0)).describeIn(ctx())).isEqualTo("of 2px");
+        assertThat(eq(new PixelDistance(2.3)).describeIn(ctx())).isEqualTo("of 2.3px");
     }
 
 }

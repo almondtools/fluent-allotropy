@@ -1,16 +1,21 @@
 package net.amygdalum.allotropy.fluent.distances;
 
-import net.amygdalum.allotropy.fluent.common.Constraint;
+import java.util.function.Predicate;
+
 import net.amygdalum.allotropy.fluent.precision.Precisable;
 import net.amygdalum.allotropy.fluent.precision.Precision;
 
-public interface DistanceConstraint extends Constraint<Distance>, Precisable<DistanceConstraint> {
+public interface DistanceConstraint extends Precisable<DistanceConstraint> {
+
+    Predicate<Distance> inContext(AssertionContext context);
+
+    String describeIn(AssertionContext context);
 
     DistanceConstraint NONE = new DistanceConstraint() {
 
         @Override
-        public boolean test(Distance dist) {
-            return true;
+        public Predicate<Distance> inContext(AssertionContext context) {
+            return c -> true;
         }
 
         @Override
@@ -19,7 +24,7 @@ public interface DistanceConstraint extends Constraint<Distance>, Precisable<Dis
         }
 
         @Override
-        public String description() {
+        public String describeIn(AssertionContext context) {
             return "any";
         }
     };

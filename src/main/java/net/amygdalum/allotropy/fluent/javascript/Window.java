@@ -22,13 +22,12 @@ public class Window {
     public static Window from(JavascriptExecutor js) {
         return new Window(js);
     }
-    
+
     public Viewport viewport() {
         return Viewport.from(js.executeScript("return {"
             + "  width: document.documentElement.clientWidth || document.body.clientWidth|| window.innerWidth,"
             + "  height: document.documentElement.clientHeight|| document.body.clientHeight|| window.innerHeight"
-            + "};"));    
+            + "};"));
     }
 
-    
 }

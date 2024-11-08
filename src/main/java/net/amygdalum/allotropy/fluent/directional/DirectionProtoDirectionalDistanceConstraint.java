@@ -33,7 +33,6 @@ public class DirectionProtoDirectionalDistanceConstraint<T extends DirectionalDi
         return to(W);
     }
 
-
     public T to(CardinalDirection direction) {
         builder.setDirection(direction);
         return assertion.about(builder.build());

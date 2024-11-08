@@ -1,7 +1,10 @@
 package net.amygdalum.allotropy.fluent.distances;
 
+import static net.amygdalum.allotropy.fluent.distances.AssertionContext.ctx;
 import static net.amygdalum.allotropy.fluent.distances.GtDistanceConstraint.gt;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +14,8 @@ class GtDistanceConstraintTest {
 
     @Test
     void testTest() {
-        GtDistanceConstraint constraint = gt(new PixelDistance(2.0));
+        Predicate<Distance> constraint = gt(new PixelDistance(2.0))
+            .inContext(ctx());
 
         assertThat(constraint.test(new PixelDistance(2.0))).isEqualTo(false);
         assertThat(constraint.test(new PixelDistance(2.1))).isEqualTo(true);
@@ -20,7 +24,8 @@ class GtDistanceConstraintTest {
 
     @Test
     void testWithPrecision() {
-        GtDistanceConstraint constraint = gt(new PixelDistance(2.0)).withPrecision(new PixelPrecision(1));
+        Predicate<Distance> constraint = gt(new PixelDistance(2.0)).withPrecision(new PixelPrecision(1))
+            .inContext(ctx());
 
         assertThat(constraint.test(new PixelDistance(1.0))).isEqualTo(false);
         assertThat(constraint.test(new PixelDistance(1.1))).isEqualTo(true);
@@ -31,8 +36,8 @@ class GtDistanceConstraintTest {
 
     @Test
     void testDescription() {
-        assertThat(gt(new PixelDistance(2.0)).description()).isEqualTo("> 2px");
-        assertThat(gt(new PixelDistance(2.3)).description()).isEqualTo("> 2.3px");
+        assertThat(gt(new PixelDistance(2.0)).describeIn(ctx())).isEqualTo("> 2px");
+        assertThat(gt(new PixelDistance(2.3)).describeIn(ctx())).isEqualTo("> 2.3px");
     }
 
 }

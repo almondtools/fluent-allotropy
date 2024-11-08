@@ -1,5 +1,7 @@
 package net.amygdalum.allotropy.fluent.distances;
 
+import java.util.function.Predicate;
+
 import net.amygdalum.allotropy.fluent.precision.Precision;
 
 public record LtDistanceConstraint(Precision precision, Distance distance) implements DistanceConstraint {
@@ -9,8 +11,8 @@ public record LtDistanceConstraint(Precision precision, Distance distance) imple
     }
 
     @Override
-    public boolean test(Distance dist) {
-        return precision.lt(dist.pixels(), distance.pixels());
+    public Predicate<Distance> inContext(AssertionContext context) {
+        return dist -> precision.lt(dist.pixels(context), distance.pixels(context));
     }
 
     @Override
@@ -19,7 +21,7 @@ public record LtDistanceConstraint(Precision precision, Distance distance) imple
     }
 
     @Override
-    public String description() {
-        return "< " + distance;
+    public String describeIn(AssertionContext context) {
+        return "< " + distance.describeIn(context);
     }
 }

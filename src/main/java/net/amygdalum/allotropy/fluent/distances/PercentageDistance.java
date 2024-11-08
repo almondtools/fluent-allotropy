@@ -3,10 +3,7 @@ package net.amygdalum.allotropy.fluent.distances;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import net.amygdalum.allotropy.fluent.dimensions.Dimension;
-import net.amygdalum.allotropy.fluent.elements.Bounds;
-
-public record PercentageDistance(double percent, Dimension dimension, Bounds bounds) implements Distance {
+public record PercentageDistance(double percent) implements Distance {
 
     private static final NumberFormat FORMAT = numberFormat();
 
@@ -18,12 +15,13 @@ public record PercentageDistance(double percent, Dimension dimension, Bounds bou
     }
 
     @Override
-    public double pixels() {
-        return (percent / 100) * bounds.size(dimension);
+    public double pixels(AssertionContext context) {
+        return (percent / 100) * context.bounds().size(context.dimension());
     }
 
-    public String toString() {
-        return FORMAT.format(percent) + "% of the " + dimension.dimensionLabel() + " of " + bounds;
+    @Override
+    public String describeIn(AssertionContext context) {
+        return FORMAT.format(percent) + "% of the " + context.dimension().dimensionLabel() + " of " + context.bounds();
     }
 
 }

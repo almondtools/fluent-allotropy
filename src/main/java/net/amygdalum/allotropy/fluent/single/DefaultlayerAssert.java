@@ -31,10 +31,10 @@ public class DefaultlayerAssert<T extends VisualElement> implements LayerAssert<
                     .asAssertionError();
             } else if (comparison == 0) {
                 throw expected(subject)
-                .__(relation.label())
-                .of(object)
-                .butWas("independent")
-                .asAssertionError();
+                    .__(relation.label())
+                    .of(object)
+                    .butWas("independent")
+                    .asAssertionError();
             }
         } else {
             throw new IllegalArgumentException("layer asserts are only possible on VisualElements with interface facet LayerableElement");

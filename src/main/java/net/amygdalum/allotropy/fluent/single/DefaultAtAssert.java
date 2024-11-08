@@ -1,10 +1,13 @@
 package net.amygdalum.allotropy.fluent.single;
 
 import static java.util.stream.Collectors.joining;
+import static net.amygdalum.allotropy.fluent.distances.AssertionContext.ctx;
 import static net.amygdalum.allotropy.fluent.precision.Precision.exact;
 import static net.amygdalum.allotropy.fluent.utils.AssertionErrors.expected;
 
+import net.amygdalum.allotropy.fluent.dimensions.Dimension;
 import net.amygdalum.allotropy.fluent.directions.CardinalDirection;
+import net.amygdalum.allotropy.fluent.distances.AssertionContext;
 import net.amygdalum.allotropy.fluent.distances.Distance;
 import net.amygdalum.allotropy.fluent.distances.DistanceConstraint;
 import net.amygdalum.allotropy.fluent.distances.DistanceResolver;
@@ -33,16 +36,21 @@ public class DefaultAtAssert<T extends VisualElement> implements AtAssert<T> {
                 .toBe(distanceResolver.description())
                 .butWere("overlapping or skew")
                 .asAssertionError());
-        if (!distanceConstraint.test(dist)) {
-            throw expected(subject)
-                .toHave("distance")
-                .__(distanceConstraint.description())
-                .to(object)
-                .at(distanceResolver.directions().stream()
-                    .map(d -> d.label())
-                    .collect(joining(", ")))
-                .butFound(dist)
-                .asAssertionError();
+        for (Dimension dimension : distanceResolver.dimensions()) {
+            AssertionContext ctx = ctx()
+                .dimension(dimension)
+                .bounds(object.bounds());
+            if (!distanceConstraint.inContext(ctx).test(dist)) {
+                throw expected(subject)
+                    .toHave("distance")
+                    .__(distanceConstraint.describeIn(ctx))
+                    .to(object)
+                    .at(distanceResolver.directions().stream()
+                        .map(d -> d.label())
+                        .collect(joining(", ")))
+                    .butFound(dist.describeIn(ctx))
+                    .asAssertionError();
+            }
         }
         return new DefaultAndAssert<>(subject);
     }
