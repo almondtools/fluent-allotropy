@@ -1,27 +1,47 @@
 package net.amygdalum.allotropy.fluent.distances;
 
+import static net.amygdalum.allotropy.fluent.dimensions.Dimension.VERTICAL;
 import static net.amygdalum.allotropy.fluent.distances.AssertionContext.ctx;
 import static net.amygdalum.allotropy.fluent.distances.BetweenDistanceConstraint.between;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.function.Predicate;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import net.amygdalum.allotropy.fluent.elements.Bounds;
 import net.amygdalum.allotropy.fluent.precision.PixelPrecision;
 
 class BetweenDistanceConstraintTest {
 
-    @Test
-    void testTest() {
-        Predicate<Distance> constraint = between(new PixelDistance(2.0), new PixelDistance(3.0))
-            .inContext(ctx());
+    @Nested
+    class testTest {
+        @Test
+        void pixels() {
+            Predicate<Distance> constraint = between(new PixelDistance(2.0), new PixelDistance(3.0))
+                .inContext(ctx());
 
-        assertThat(constraint.test(new PixelDistance(1.9))).isEqualTo(false);
-        assertThat(constraint.test(new PixelDistance(2.0))).isEqualTo(true);
-        assertThat(constraint.test(new PixelDistance(2.5))).isEqualTo(true);
-        assertThat(constraint.test(new PixelDistance(3.0))).isEqualTo(true);
-        assertThat(constraint.test(new PixelDistance(3.1))).isEqualTo(false);
+            assertThat(constraint.test(new PixelDistance(1.9))).isEqualTo(false);
+            assertThat(constraint.test(new PixelDistance(2.0))).isEqualTo(true);
+            assertThat(constraint.test(new PixelDistance(2.5))).isEqualTo(true);
+            assertThat(constraint.test(new PixelDistance(3.0))).isEqualTo(true);
+            assertThat(constraint.test(new PixelDistance(3.1))).isEqualTo(false);
+        }
+
+        @Test
+        void percent() {
+            Predicate<Distance> constraint = between(new PercentageDistance(20.0), new PixelDistance(3.0))
+                .inContext(ctx()
+                    .dimension(VERTICAL)
+                    .bounds(new Bounds(1, 1, 2, 10)));
+
+            assertThat(constraint.test(new PixelDistance(1.9))).isEqualTo(false);
+            assertThat(constraint.test(new PixelDistance(2.0))).isEqualTo(true);
+            assertThat(constraint.test(new PixelDistance(2.5))).isEqualTo(true);
+            assertThat(constraint.test(new PixelDistance(3.0))).isEqualTo(true);
+            assertThat(constraint.test(new PixelDistance(3.1))).isEqualTo(false);
+        }
     }
 
     @Test
