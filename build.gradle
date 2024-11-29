@@ -42,7 +42,7 @@ dependencies {
 }
 
 group = 'net.amygdalum'
-version = '0.0.3'
+version = '0.0.4-SNAPSHOT'
 description = 'net.amygdalum:fluent-allotropy'
 
 java {
