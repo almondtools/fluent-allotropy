@@ -31,18 +31,18 @@ sourceSets {
 }
 
 dependencies {
-    api 'org.assertj:assertj-core:3.26.0'
-    api 'org.seleniumhq.selenium:selenium-java:4.22.0'
-    testImplementation 'io.github.bonigarcia:webdrivermanager:5.9.1'
-    testImplementation 'org.junit.platform:junit-platform-engine:1.10.3'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.3'
-    testImplementation 'io.undertow:undertow-core:2.3.14.Final'
-    testImplementation 'ch.qos.logback:logback-classic:1.5.6'
+    api 'org.assertj:assertj-core:3.26.3'
+    api 'org.seleniumhq.selenium:selenium-java:4.27.0'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.9.2'
+    testImplementation 'org.junit.platform:junit-platform-engine:1.11.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
+    testImplementation 'io.undertow:undertow-core:2.3.18.Final'
+    testImplementation 'ch.qos.logback:logback-classic:1.5.12'
     testImplementation 'org.slf4j:jul-to-slf4j:2.0.13'
 }
 
 group = 'net.amygdalum'
-version = '0.0.3-SNAPSHOT'
+version = '0.0.3'
 description = 'net.amygdalum:fluent-allotropy'
 
 java {
