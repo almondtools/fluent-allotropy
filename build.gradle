@@ -1,3 +1,5 @@
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+
 plugins {
     id 'java-library'
     id 'maven-publish'
@@ -7,6 +9,12 @@ plugins {
 }
 
 apply plugin: "com.github.ben-manes.versions"
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
 repositories {
     mavenLocal()
@@ -44,12 +52,6 @@ dependencies {
 group = 'net.amygdalum'
 version = '0.0.4-SNAPSHOT'
 description = 'net.amygdalum:fluent-allotropy'
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
-}
 
 task javadocJar(type: Jar) {
     dependsOn javadoc
