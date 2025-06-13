@@ -4,7 +4,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
-    id("com.github.ben-manes.versions") version "0.51.0"
+    id("com.github.ben-manes.versions") version "0.52.0"
     id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
 }
 
@@ -39,18 +39,21 @@ sourceSets {
 }
 
 dependencies {
-    api 'org.assertj:assertj-core:3.26.3'
-    api 'org.seleniumhq.selenium:selenium-java:4.27.0'
-    testImplementation 'io.github.bonigarcia:webdrivermanager:5.9.2'
-    testImplementation 'org.junit.platform:junit-platform-engine:1.11.3'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
+    api 'org.assertj:assertj-core:3.27.3'
+    api 'org.seleniumhq.selenium:selenium-java:4.33.0'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:6.1.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.12.2'
+    testImplementation 'org.junit.platform:junit-platform-engine:1.12.2'
+    testImplementation 'org.junit.platform:junit-platform-launcher:1.12.2'
     testImplementation 'io.undertow:undertow-core:2.3.18.Final'
-    testImplementation 'ch.qos.logback:logback-classic:1.5.12'
-    testImplementation 'org.slf4j:jul-to-slf4j:2.0.13'
+    testImplementation 'ch.qos.logback:logback-classic:1.5.18'
+    testImplementation 'org.slf4j:jul-to-slf4j:2.0.17'
+    
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.12.2'
 }
 
 group = 'net.amygdalum'
-version = '0.0.4-SNAPSHOT'
+version = '0.0.4'
 description = 'net.amygdalum:fluent-allotropy'
 
 task javadocJar(type: Jar) {
@@ -62,6 +65,10 @@ task javadocJar(type: Jar) {
 task sourcesJar(type: Jar) {
     archiveClassifier.set('sources')
     from sourceSets.main.allSource
+}
+
+test {
+    useJUnitPlatform()
 }
 
 jar {
