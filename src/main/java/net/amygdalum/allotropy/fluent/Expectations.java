@@ -40,7 +40,7 @@ public class Expectations {
     public static VisualElementsAssert<WebVisualElement> expect(WebElement... subjects) {
         return expectElements(Arrays.stream(subjects)
             .map(s -> new WebVisualElement(s))
-            .toArray(WebVisualElement[]::new));
+            .collect(toArray()));
     }
 
     @SafeVarargs

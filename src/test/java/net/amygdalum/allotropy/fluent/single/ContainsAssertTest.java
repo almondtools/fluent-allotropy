@@ -174,7 +174,7 @@ class ContainsAssertTest {
                 .about(1).pixels().top()
                 .about(1).pixels().left()
                 .about(1).pixels().right()
-                .about(3).pixels().bottom()
+                .about(50).percent().bottom()
                 .items(canvas.rect(2, 2, 3, 3));
         }
 

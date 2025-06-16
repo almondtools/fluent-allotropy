@@ -56,6 +56,14 @@ public class DefaultVisualElementsAssert<T extends VisualElement> implements Vis
     }
 
     @Override
+    public <S extends VisualElement> VisualElementsAssert<S> as(Function<T, S> cast) {
+        var subjects = Arrays.stream(this.subjects)
+            .map(cast)
+            .collect(toArray());
+        return new DefaultVisualElementsAssert<S>(subjects);
+    }
+
+    @Override
     public <S extends VisualElement> AndAssert<T> chunked(Function<T[], S[][]> selector, Consumer<VisualElementsAssert<S>> chunkAssert) {
         S[][] chunked = selector.apply(subjects);
         for (var chunk : chunked) {

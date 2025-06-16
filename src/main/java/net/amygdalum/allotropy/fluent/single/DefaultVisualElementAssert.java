@@ -83,6 +83,12 @@ public class DefaultVisualElementAssert<T extends VisualElement> implements Visu
     }
 
     @Override
+    public <S extends VisualElement> VisualElementAssert<S> as(Function<T, S> cast) {
+        var subject = cast.apply(this.subject);
+        return new DefaultVisualElementAssert<S>(subject);
+    }
+
+    @Override
     public <S extends VisualElement> AndAssert<T> select(Function<T, S> selector, Consumer<VisualElementAssert<S>> selectedAssert) {
         selectedAssert.accept(new DefaultVisualElementAssert<S>(selector.apply(subject)));
         return new DefaultAndAssert<T>(subject);

@@ -21,10 +21,15 @@ public final class MessageValues {
             return '"' + escape(string) + '"';
         } else if (value instanceof Double dvalue) {
             return FORMAT.format(dvalue);
-        } else if (!value.getClass().isPrimitive()) {
-            return '<' + value.toString() + '>';
-        } else {
+        } else if (value instanceof Number) {
             return value.toString();
+        } else if (value instanceof Character) {
+            return '\'' + value.toString() + '\'';
+        } else if (value instanceof Boolean) {
+            return value.toString();
+        } else {
+            return '<' + value.toString() + '>';
+
         }
     }
 

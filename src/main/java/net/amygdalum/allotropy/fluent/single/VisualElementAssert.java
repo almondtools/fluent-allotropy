@@ -45,7 +45,7 @@ public interface VisualElementAssert<T extends VisualElement> extends Assert {
 
     OverlapsAssert<T> overlaps();
 
-    default AndAssert<T> contains(Function<T,?> selfRelative) {
+    default AndAssert<T> contains(Function<T, ?> selfRelative) {
         return contains().items(selfRelative);
     }
 
@@ -92,6 +92,8 @@ public interface VisualElementAssert<T extends VisualElement> extends Assert {
     }
 
     AndAssert<T> property(Constraint<VisualElement> condition);
+
+    <S extends VisualElement> VisualElementAssert<S> as(Function<T, S> cast);
 
     <S extends VisualElement> AndAssert<T> select(Function<T, S> selector, Consumer<VisualElementAssert<S>> selectedAssert);
 

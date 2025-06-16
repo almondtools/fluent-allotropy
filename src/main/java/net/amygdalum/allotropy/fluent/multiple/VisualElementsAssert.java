@@ -28,6 +28,8 @@ public interface VisualElementsAssert<T extends VisualElement> extends Assert {
 
     AndAssert<T> each(Consumer<VisualElementAssert<T>> elementAssert);
 
+    <S extends VisualElement> VisualElementsAssert<S> as(Function<T, S> cast);
+
     <S extends VisualElement> AndAssert<T> chunked(Function<T[], S[][]> selector, Consumer<VisualElementsAssert<S>> chunkAssert);
 
     VisualElementsAssert<T> sorted(Comparator<T> comparator);
