@@ -3,6 +3,7 @@ package net.amygdalum.allotropy.fluent.single;
 import static net.amygdalum.allotropy.fluent.utils.Arrays.toArray;
 
 import java.util.Arrays;
+import java.util.function.Function;
 
 import org.openqa.selenium.WebElement;
 
@@ -36,7 +37,10 @@ public interface ContainsAssert<T extends VisualElement> extends Precisable<Cont
 
     }
 
+    AndAssert<T> items(Function<T,?> selfRelative);
+
     AndAssert<T> itemElements(VisualElement... items);
+    
 
     default UnaryProtoDirectionalDistanceConstraint<ContainsAssert<T>> less(double units) {
         return about(new DirectionalDistanceConstraintBuilder()

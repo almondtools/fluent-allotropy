@@ -1,5 +1,6 @@
 package net.amygdalum.allotropy.fluent;
 
+import static net.amygdalum.allotropy.fluent.elements.AsVisualElement.toVisualElements;
 import static net.amygdalum.allotropy.fluent.utils.Arrays.toArray;
 
 import java.util.Arrays;
@@ -32,18 +33,8 @@ public class Expectations {
         return new DefaultVisualElementAssert<>(subject);
     }
 
-    public static VisualElementsAssert<WebVisualElement> expect(List<? extends Object> subjects) {
-        return expectElements(Arrays.stream(subjects.toArray())
-            .map(s -> {
-                if (s instanceof WebElement e) {
-                    return new WebVisualElement(e);
-                } else if (s instanceof AsVisualElement<?> e) {
-                    return e.asVisualElement();
-                } else {
-                    throw new IllegalArgumentException("expected list of web elements or visual elements, but got " + s.getClass().getSimpleName());
-                }
-            })
-            .toArray(WebVisualElement[]::new));
+    public static VisualElementsAssert<VisualElement> expect(List<? extends Object> subjects) {
+        return expectElements(toVisualElements(subjects));
     }
 
     public static VisualElementsAssert<WebVisualElement> expect(WebElement... subjects) {

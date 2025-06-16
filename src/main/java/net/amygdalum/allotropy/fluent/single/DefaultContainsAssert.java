@@ -7,12 +7,14 @@ import static net.amygdalum.allotropy.fluent.directions.CardinalDirection.S;
 import static net.amygdalum.allotropy.fluent.directions.CardinalDirection.W;
 import static net.amygdalum.allotropy.fluent.directions.Directed.at;
 import static net.amygdalum.allotropy.fluent.distances.AssertionContext.ctx;
+import static net.amygdalum.allotropy.fluent.elements.AsVisualElement.toVisualElements;
 import static net.amygdalum.allotropy.fluent.elements.VisualOperand.op;
 import static net.amygdalum.allotropy.fluent.precision.Precision.exact;
 import static net.amygdalum.allotropy.fluent.utils.AssertionErrors.expected;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import net.amygdalum.allotropy.fluent.directional.DirectionalDistanceConstraint;
 import net.amygdalum.allotropy.fluent.directions.Directed;
@@ -32,6 +34,12 @@ public class DefaultContainsAssert<T extends VisualElement> implements ContainsA
         this.subject = subject;
         this.insideConstraints = new ArrayList<>();
         this.precision = exact();
+    }
+
+    @Override
+    public AndAssert<T> items(Function<T, ?> selfRelative) {
+        var items = selfRelative.apply(subject);
+        return itemElements(toVisualElements(items));
     }
 
     @Override

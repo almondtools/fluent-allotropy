@@ -29,6 +29,9 @@ public class WebElementLayer implements Layer {
         Point point = Stream.of(thisRect.topLeft(), thisRect.topRight(), thisRect.bottomRight(), thisRect.bottomLeft())
             .filter(p -> thatRect.contains(p))
             .findFirst()
+            .or(() -> Stream.of(thatRect.topLeft(), thatRect.topRight(), thatRect.bottomRight(), thatRect.bottomLeft())
+                .filter(p -> thisRect.contains(p))
+                .findFirst())
             .orElse(null);
         if (point == null) {
             return 0;

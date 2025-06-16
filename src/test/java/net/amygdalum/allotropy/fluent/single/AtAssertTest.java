@@ -51,6 +51,9 @@ class AtAssertTest {
             expect(canvas.rect(1, 2, 2, 3))
                 .above().between(0).and(2).pixels()
                 .of(canvas.rect(2, 5, 4, 6));
+            expect(canvas.rect(1, 2, 2, 3))
+                .above().between(0).and(2).pixels()
+                .of(i -> canvas.rect(2, 5, 4, 6));
         }
 
         @Test

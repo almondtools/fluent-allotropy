@@ -34,6 +34,9 @@ class InsideAssertTest {
             expect(canvas.rect(2, 2, 3, 3))
                 .inside()
                 .of(canvas.rect(1, 1, 4, 6));
+            expect(canvas.rect(2, 2, 3, 3))
+                .inside()
+                .of(i -> canvas.rect(1, 1, 4, 6));
         }
 
         @Test

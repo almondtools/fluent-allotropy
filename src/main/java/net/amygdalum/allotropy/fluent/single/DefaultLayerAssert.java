@@ -2,20 +2,29 @@ package net.amygdalum.allotropy.fluent.single;
 
 import static net.amygdalum.allotropy.fluent.directions.LayerRelation.BEHIND;
 import static net.amygdalum.allotropy.fluent.directions.LayerRelation.FRONT;
+import static net.amygdalum.allotropy.fluent.elements.AsVisualElement.toVisualElement;
 import static net.amygdalum.allotropy.fluent.utils.AssertionErrors.expected;
+
+import java.util.function.Function;
 
 import net.amygdalum.allotropy.fluent.directions.LayerRelation;
 import net.amygdalum.allotropy.fluent.elements.LayerableElement;
 import net.amygdalum.allotropy.fluent.elements.VisualElement;
 
-public class DefaultlayerAssert<T extends VisualElement> implements LayerAssert<T> {
+public class DefaultLayerAssert<T extends VisualElement> implements LayerAssert<T> {
 
     private T subject;
     private LayerRelation relation;
 
-    public DefaultlayerAssert(T subject, LayerRelation relation) {
+    public DefaultLayerAssert(T subject, LayerRelation relation) {
         this.subject = subject;
         this.relation = relation;
+    }
+
+    @Override
+    public AndAssert<T> of(Function<T, ?> selfRelative) {
+        var element = selfRelative.apply(subject);
+        return ofElement(toVisualElement(element));
     }
 
     @Override

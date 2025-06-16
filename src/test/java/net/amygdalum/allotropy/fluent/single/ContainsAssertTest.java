@@ -12,6 +12,7 @@ import net.amygdalum.allotropy.fluent.canvas.AsciiCanvas;
 import net.amygdalum.allotropy.fluent.canvas.Canvas;
 import net.amygdalum.allotropy.fluent.canvas.CanvasExtension;
 import net.amygdalum.allotropy.fluent.canvas.Print;
+import net.amygdalum.allotropy.fluent.elements.VisualElement;
 
 @ExtendWith(CanvasExtension.class)
 class ContainsAssertTest {
@@ -33,6 +34,8 @@ class ContainsAssertTest {
         void success() {
             expect(canvas.rect(1, 1, 7, 6))
                 .contains(canvas.rect(2, 2, 3, 3), canvas.rect(4, 4, 6, 5));
+            expect(canvas.rect(1, 1, 7, 6))
+                .contains(i -> new VisualElement[] {canvas.rect(2, 2, 3, 3), canvas.rect(4, 4, 6, 5)});
             expect(canvas.rect(1, 1, 7, 6))
                 .contains(canvas.rect(2, 2, 3, 3))
                 .and()

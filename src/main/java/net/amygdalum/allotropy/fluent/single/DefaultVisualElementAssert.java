@@ -43,7 +43,7 @@ public class DefaultVisualElementAssert<T extends VisualElement> implements Visu
 
     @Override
     public LayerAssert<T> layered(LayerRelation direction) {
-        return new DefaultlayerAssert<>(subject, direction);
+        return new DefaultLayerAssert<>(subject, direction);
     }
 
     @Override

@@ -45,6 +45,10 @@ public interface VisualElementAssert<T extends VisualElement> extends Assert {
 
     OverlapsAssert<T> overlaps();
 
+    default AndAssert<T> contains(Function<T,?> selfRelative) {
+        return contains().items(selfRelative);
+    }
+
     default AndAssert<T> contains(AsVisualElement<?>... items) {
         return contains().items(items);
     }

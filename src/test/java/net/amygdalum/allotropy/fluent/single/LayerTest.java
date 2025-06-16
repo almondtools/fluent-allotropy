@@ -24,10 +24,13 @@ class LayerTest {
     void defaultLayering() {
         driver.navigate().to(server.url("/layers.html"));
 
+        WebElement c = driver.findElement(By.cssSelector("#defaultLayering"));
         WebElement b = driver.findElement(By.cssSelector("#defaultLayering .back"));
         WebElement f = driver.findElement(By.cssSelector("#defaultLayering .front"));
         expect(b).behind().of(f);
         expect(f).front().of(b);
+        expect(c).behind().of(container -> container.findElement(By.cssSelector(".back")));
+        expect(c).behind().of(container -> container.findElement(By.cssSelector(".front")));
     }
 
     @Test

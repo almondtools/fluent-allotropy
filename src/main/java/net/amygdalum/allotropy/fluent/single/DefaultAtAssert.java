@@ -2,8 +2,11 @@ package net.amygdalum.allotropy.fluent.single;
 
 import static java.util.stream.Collectors.joining;
 import static net.amygdalum.allotropy.fluent.distances.AssertionContext.ctx;
+import static net.amygdalum.allotropy.fluent.elements.AsVisualElement.toVisualElement;
 import static net.amygdalum.allotropy.fluent.precision.Precision.exact;
 import static net.amygdalum.allotropy.fluent.utils.AssertionErrors.expected;
+
+import java.util.function.Function;
 
 import net.amygdalum.allotropy.fluent.dimensions.Dimension;
 import net.amygdalum.allotropy.fluent.directions.CardinalDirection;
@@ -26,6 +29,12 @@ public class DefaultAtAssert<T extends VisualElement> implements AtAssert<T> {
         this.distanceConstraint = DistanceConstraint.NONE;
         this.distanceResolver = DistanceResolver.DEFAULT;
         this.precision = exact();
+    }
+
+    @Override
+    public AndAssert<T> of(Function<T, ?> selfRelative) {
+        var element = selfRelative.apply(subject);
+        return ofElement(toVisualElement(element));
     }
 
     @Override
