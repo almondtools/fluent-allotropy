@@ -53,7 +53,7 @@ dependencies {
 }
 
 group = 'net.amygdalum'
-version = '0.0.6'
+version = '0.0.7-SNAPSHOT'
 description = 'net.amygdalum:fluent-allotropy'
 
 task javadocJar(type: Jar) {
