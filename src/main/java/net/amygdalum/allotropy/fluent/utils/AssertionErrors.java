@@ -106,11 +106,6 @@ public final class AssertionErrors {
             return this;
         }
 
-        public Builder butFailed() {
-            builder.append(" but failed");
-            return this;
-        }
-
         public Builder butFound(Object object) {
             builder.append(" but found ").append(object);
             return this;
@@ -121,23 +116,8 @@ public final class AssertionErrors {
             return this;
         }
 
-        public Builder butNotAt(Object object) {
-            builder.append(" but not at ").append(object);
-            return this;
-        }
-
         public Builder insideOf(VisualElement object) {
             builder.append(" inside of ").append(object);
-            return this;
-        }
-
-        public Builder startingWith(Object object) {
-            builder.append(" starting with ").append(object);
-            return this;
-        }
-
-        public Builder endingWith(Object object) {
-            builder.append(" ending with ").append(object);
             return this;
         }
 

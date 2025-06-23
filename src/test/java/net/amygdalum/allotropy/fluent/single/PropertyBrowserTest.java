@@ -16,7 +16,7 @@ import net.amygdalum.allotropy.fluent.LocalHttpServer;
 
 @ExtendWith(LocalHttpServer.class)
 @ExtendWith(ChromeDriverSupport.class)
-class PropertyTest {
+class PropertyBrowserTest {
 
     private WebDriver driver;
     private LocalHttpServer.Server server;

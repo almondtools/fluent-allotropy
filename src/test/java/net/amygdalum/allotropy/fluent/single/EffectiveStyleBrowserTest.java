@@ -16,7 +16,7 @@ import net.amygdalum.allotropy.fluent.LocalHttpServer;
 
 @ExtendWith(LocalHttpServer.class)
 @ExtendWith(ChromeDriverSupport.class)
-class EffectiveStyleTest {
+class EffectiveStyleBrowserTest {
 
     private WebDriver driver;
     private LocalHttpServer.Server server;

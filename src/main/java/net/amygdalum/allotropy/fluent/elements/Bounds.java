@@ -7,6 +7,8 @@ import net.amygdalum.allotropy.fluent.directions.CardinalDirection;
 
 public record Bounds(int left, int top, int right, int bottom) {
 
+    public static final Bounds NONE = new Bounds(0,0,0,0);
+    
     public static Bounds from(Object object) {
         if (object instanceof Bounds bounds) {
             return bounds;
@@ -23,6 +25,15 @@ public record Bounds(int left, int top, int right, int bottom) {
         } else {
             throw new IllegalArgumentException();
         }
+    }
+
+    public Bounds extend(Bounds with) {
+        var left = Math.min(this.left, with.left);
+        var top = Math.min(this.top, with.top);
+        var right = Math.max(this.right, with.right);
+        var bottom = Math.max(this.bottom, with.bottom);
+
+        return new Bounds(left, top, right, bottom);
     }
 
     public double bound(CardinalDirection direction) {

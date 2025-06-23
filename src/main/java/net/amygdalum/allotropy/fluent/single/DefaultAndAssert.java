@@ -12,7 +12,7 @@ public class DefaultAndAssert<T extends VisualElement> implements AndAssert<T> {
 
     @Override
     public VisualElementAssert<T> and() {
-        return new DefaultVisualElementAssert<>(subject);
+        return DefaultVisualElementAssert.find(subject);
     }
 
 }

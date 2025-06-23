@@ -14,7 +14,7 @@ import net.amygdalum.allotropy.fluent.canvas.CanvasExtension;
 import net.amygdalum.allotropy.fluent.canvas.Print;
 
 @ExtendWith(CanvasExtension.class)
-class AlignedAssertTest {
+class AlignedTest {
 
     @Canvas(print = true)
     private AsciiCanvas canvas;

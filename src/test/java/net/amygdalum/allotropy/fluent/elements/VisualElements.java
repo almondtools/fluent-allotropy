@@ -38,6 +38,11 @@ public class VisualElements {
             this.parent = parent;
             return this;
         }
+        
+        public FakeVisualElement withBounds(Bounds bounds) {
+            this.bounds = bounds;
+            return this;
+        }
 
         public FakeVisualElement withText(String text) {
             this.text = text;

@@ -126,6 +126,11 @@ public class WebElements {
             return this;
         }
 
+        public FakeWebElement withRect(Rectangle rect) {
+            this.rect = rect;
+            return this;
+        }
+
         public FakeWebElement withChild(String selector, WebElement child) {
             this.children.computeIfAbsent(selector, s -> new ArrayList<>()).add(child);
             return this;

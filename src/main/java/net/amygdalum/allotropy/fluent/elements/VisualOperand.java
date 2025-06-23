@@ -32,14 +32,16 @@ public record VisualOperand(Precision precision, Bounds bounds) implements Preci
                 return fail("stacked");
             }
         }
-        if (!precision.ge(this.leftDistanceToRight(that), 0) && !precision.ge(this.rightDistanceToLeft(that), 0)) {
+        if (precision.eq(this.topDistance(that), 0) && precision.eq(bottomDistance(that), 0)) {
+            return TRUE;
+        } else if (!precision.ge(this.leftDistanceToRight(that), 0) && !precision.ge(this.rightDistanceToLeft(that), 0)) {
             return fail("displaced");
-        }
-        if (!precision.ge(this.topDistance(that), 0) && !precision.le(this.bottomDistance(that), 0)
+        } else if (!precision.ge(this.topDistance(that), 0) && !precision.le(this.bottomDistance(that), 0)
             || !precision.le(this.topDistance(that), 0) && !precision.ge(this.bottomDistance(that), 0)) {
             return fail("displaced");
+        } else {
+            return TRUE;
         }
-        return TRUE;
     }
 
     public BoolWithExplanation stacked(VisualOperand that) {
@@ -52,14 +54,16 @@ public record VisualOperand(Precision precision, Bounds bounds) implements Preci
                 return fail("next to");
             }
         }
-        if (!precision.ge(this.topDistanceToBottom(that), 0) && !precision.ge(this.bottomDistanceToTop(that), 0)) {
+        if (precision.eq(this.leftDistance(that), 0) && precision.eq(rightDistance(that), 0)) {
+            return TRUE;
+        } else if (!precision.ge(this.topDistanceToBottom(that), 0) && !precision.ge(this.bottomDistanceToTop(that), 0)) {
             return fail("displaced");
-        }
-        if (!precision.ge(this.leftDistance(that), 0) && !precision.le(this.rightDistance(that), 0)
+        } else if (!precision.ge(this.leftDistance(that), 0) && !precision.le(this.rightDistance(that), 0)
             || !precision.le(this.leftDistance(that), 0) && !precision.ge(this.rightDistance(that), 0)) {
             return fail("displaced");
+        } else {
+            return TRUE;
         }
-        return TRUE;
     }
 
     public boolean around(VisualOperand that) {

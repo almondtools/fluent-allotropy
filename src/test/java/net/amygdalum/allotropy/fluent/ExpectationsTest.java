@@ -44,7 +44,7 @@ class ExpectationsTest {
         void withUpCastingElements() {
             AsVisualElement<MyBetterElement> element = new MyBetterElement(visualElement());
             expect(List.of(element))
-                .as(s -> (MyBetterElement) s)
+                .as(MyBetterElement.class)
                 .count().equal(1);
         }
 
@@ -52,7 +52,7 @@ class ExpectationsTest {
         void withFailedUpCastingElements() {
             AsVisualElement<VisualElement> element = new MyElement();
             assertThrows(ClassCastException.class, () -> expect(List.of(element))
-                .as(s -> (MyBetterElement) s)
+                .as(MyBetterElement.class)
                 .count().equal(1));
 
         }

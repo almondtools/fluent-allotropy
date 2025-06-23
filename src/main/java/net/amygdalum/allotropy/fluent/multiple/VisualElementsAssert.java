@@ -2,7 +2,6 @@ package net.amygdalum.allotropy.fluent.multiple;
 
 import java.util.Comparator;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import net.amygdalum.allotropy.fluent.common.Assert;
 import net.amygdalum.allotropy.fluent.common.Constraint;
@@ -11,6 +10,10 @@ import net.amygdalum.allotropy.fluent.elements.VisualElement;
 import net.amygdalum.allotropy.fluent.single.VisualElementAssert;
 
 public interface VisualElementsAssert<T extends VisualElement> extends Assert {
+
+    <S extends VisualElement> VisualElementsAssert<S> backAs(Class<S> clazz);
+
+    <S extends VisualElement> boolean hasSubjects(S[] subjects);
 
     AlignedAssert<T> alignedVertically();
 
@@ -28,13 +31,11 @@ public interface VisualElementsAssert<T extends VisualElement> extends Assert {
 
     AndAssert<T> each(Consumer<VisualElementAssert<T>> elementAssert);
 
-    <S extends VisualElement> VisualElementsAssert<S> as(Function<T, S> cast);
+    <S extends VisualElement> VisualElementsAssert<S> as(Class<S> clazz);
 
-    <S extends VisualElement> AndAssert<T> chunked(Function<T[], S[][]> selector, Consumer<VisualElementsAssert<S>> chunkAssert);
+    <S extends VisualElement> VisualElementsAssert<S> selecting(Selecting<T, S> selector);
 
     VisualElementsAssert<T> sorted(Comparator<T> comparator);
-
-    <S extends VisualElement> AndAssert<T> select(Function<T, S> selector, Consumer<VisualElementsAssert<S>> selectedAssert);
 
     CountAssert<T> count();
 

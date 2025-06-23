@@ -15,7 +15,7 @@ import net.amygdalum.allotropy.fluent.LocalHttpServer;
 
 @ExtendWith(LocalHttpServer.class)
 @ExtendWith(ChromeDriverSupport.class)
-class AlignTest {
+class AlignBrowserTest {
 
     private WebDriver driver;
     private LocalHttpServer.Server server;

@@ -5,7 +5,6 @@ import static net.amygdalum.allotropy.fluent.dimensions.Dimension.VERTICAL;
 import static net.amygdalum.allotropy.fluent.directions.LayerRelation.BEHIND;
 import static net.amygdalum.allotropy.fluent.directions.LayerRelation.FRONT;
 
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 import net.amygdalum.allotropy.fluent.common.Assert;
@@ -18,6 +17,8 @@ import net.amygdalum.allotropy.fluent.elements.VisualElement;
 import net.amygdalum.allotropy.fluent.multiple.VisualElementsAssert;
 
 public interface VisualElementAssert<T extends VisualElement> extends Assert {
+
+    <S extends VisualElement> VisualElementAssert<S> backAs(Class<S> clazz);
 
     default AtAssert<T> above() {
         return at()
@@ -93,9 +94,12 @@ public interface VisualElementAssert<T extends VisualElement> extends Assert {
 
     AndAssert<T> property(Constraint<VisualElement> condition);
 
-    <S extends VisualElement> VisualElementAssert<S> as(Function<T, S> cast);
+    <S extends VisualElement> VisualElementAssert<S> as(Class<S> clazz);
 
-    <S extends VisualElement> AndAssert<T> select(Function<T, S> selector, Consumer<VisualElementAssert<S>> selectedAssert);
+    <S extends VisualElement> VisualElementAssert<S> selecting(Selecting<T, S> selector);
 
-    <S extends VisualElement> AndAssert<T> spread(Function<T, S[]> selector, Consumer<VisualElementsAssert<S>> selectedAssert);
+    VisualElementsAssert<VisualElement> elements();
+
+    <S extends VisualElement> boolean hasSubject(S subject);
+
 }

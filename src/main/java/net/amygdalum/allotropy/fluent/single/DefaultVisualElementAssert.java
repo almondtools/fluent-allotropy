@@ -4,22 +4,45 @@ import static net.amygdalum.allotropy.fluent.dimensions.Dimension.HORIZONTAL;
 import static net.amygdalum.allotropy.fluent.dimensions.Dimension.VERTICAL;
 import static net.amygdalum.allotropy.fluent.utils.AssertionErrors.expected;
 
-import java.util.function.Consumer;
-import java.util.function.Function;
-
 import net.amygdalum.allotropy.fluent.common.Constraint;
 import net.amygdalum.allotropy.fluent.dimensions.Dimension;
 import net.amygdalum.allotropy.fluent.directions.LayerRelation;
 import net.amygdalum.allotropy.fluent.elements.VisualElement;
+import net.amygdalum.allotropy.fluent.elements.VisualElementAggregate;
 import net.amygdalum.allotropy.fluent.multiple.DefaultVisualElementsAssert;
 import net.amygdalum.allotropy.fluent.multiple.VisualElementsAssert;
 
 public class DefaultVisualElementAssert<T extends VisualElement> implements VisualElementAssert<T> {
 
+    private static AssertContext<VisualElementAssert<?>> context = new AssertContext<>();
+
     private T subject;
 
     public DefaultVisualElementAssert(T subject) {
         this.subject = subject;
+        context.push(this);
+    }
+    
+    public static <T extends VisualElement> VisualElementAssert<T> find(T subject) {
+        VisualElementAssert<?> item = context.peek();
+        if (item.hasSubject(subject)) {
+            @SuppressWarnings("unchecked")
+            VisualElementAssert<T> foundItem = (VisualElementAssert<T>) item;
+            return foundItem;
+        }
+        context.remove();
+        return find(subject);
+    }
+
+    @Override
+    public <S extends VisualElement> boolean hasSubject(S subject) {
+        return this.subject == subject;
+    }
+
+    @Override
+    public <S extends VisualElement> VisualElementAssert<S> backAs(Class<S> clazz) {
+        VisualElementAssert<?> removed = context.remove();
+        return removed.as(clazz);
     }
 
     public AtAssert<T> at() {
@@ -83,20 +106,24 @@ public class DefaultVisualElementAssert<T extends VisualElement> implements Visu
     }
 
     @Override
-    public <S extends VisualElement> VisualElementAssert<S> as(Function<T, S> cast) {
-        var subject = cast.apply(this.subject);
+    public <S extends VisualElement> VisualElementAssert<S> as(Class<S> clazz) {
+        var subject = clazz.cast(this.subject);
         return new DefaultVisualElementAssert<S>(subject);
     }
 
     @Override
-    public <S extends VisualElement> AndAssert<T> select(Function<T, S> selector, Consumer<VisualElementAssert<S>> selectedAssert) {
-        selectedAssert.accept(new DefaultVisualElementAssert<S>(selector.apply(subject)));
-        return new DefaultAndAssert<T>(subject);
+    public <S extends VisualElement> VisualElementAssert<S> selecting(Selecting<T, S> selector) {
+        return new DefaultVisualElementAssert<S>(selector.apply(subject));
     }
 
     @Override
-    public <S extends VisualElement> AndAssert<T> spread(Function<T, S[]> selector, Consumer<VisualElementsAssert<S>> selectedAssert) {
-        selectedAssert.accept(new DefaultVisualElementsAssert<S>(selector.apply(subject)));
-        return new DefaultAndAssert<T>(subject);
+    public VisualElementsAssert<VisualElement> elements() {
+        if (subject instanceof VisualElementAggregate subjects) {
+            return new DefaultVisualElementsAssert<>(subjects.elements());
+        } else {
+            return new DefaultVisualElementsAssert<>(new VisualElement[] {subject});
+        }
     }
+
+
 }
