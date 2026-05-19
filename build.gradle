@@ -4,27 +4,24 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
-    id("com.github.ben-manes.versions") version "0.52.0"
-    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
+    id("com.github.ben-manes.versions") version "0.54.0"
 }
 
-apply plugin: "com.github.ben-manes.versions"
+group = 'net.amygdalum'
+description = 'A fluent API for allotropy'
 
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+
+    withSourcesJar()
+    withJavadocJar()
 }
 
 repositories {
+    mavenCentral()
     mavenLocal()
-    maven {
-        url = uri('https://repo.maven.apache.org/maven2/')
-    }
-}
-
-configurations {
-    examplesImplementation.extendsFrom testImplementation
 }
 
 sourceSets {
@@ -32,15 +29,22 @@ sourceSets {
         java {
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
-            srcDir file('src/examples/java')
+            srcDirs = [file('src/examples/java')]
         }
-        resources.srcDir file('src/examples/resources')
+        resources {
+            srcDirs = [file('src/examples/resources')]
+        }
     }
+}
+
+configurations.named("examplesImplementation") {
+    extendsFrom configurations.testImplementation
 }
 
 dependencies {
     api 'org.assertj:assertj-core:3.27.3'
     api 'org.seleniumhq.selenium:selenium-java:4.33.0'
+
     testImplementation 'io.github.bonigarcia:webdrivermanager:6.1.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.12.2'
     testImplementation 'org.junit.platform:junit-platform-engine:1.12.2'
@@ -50,21 +54,6 @@ dependencies {
     testImplementation 'org.slf4j:jul-to-slf4j:2.0.17'
     
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.12.2'
-}
-
-group = 'net.amygdalum'
-version = '0.0.7-SNAPSHOT'
-description = 'net.amygdalum:fluent-allotropy'
-
-task javadocJar(type: Jar) {
-    dependsOn javadoc
-    archiveClassifier.set('javadoc')
-    from javadoc.destinationDir
-}
-
-task sourcesJar(type: Jar) {
-    archiveClassifier.set('sources')
-    from sourceSets.main.allSource
 }
 
 test {
@@ -79,18 +68,10 @@ jar {
     }
 }
 
-nexusPublishing {
-    repositories {
-        sonatype()
-    }
-}
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            from(components.java)
-            artifact sourcesJar
-            artifact javadocJar
+            from components.java
             
 	        pom {
 		        name = 'Fluent-Allotropy'
@@ -112,22 +93,18 @@ publishing {
 	            scm {
 					connection = 'scm:git:git@github.com:almondtools/fluent-allotropy.git'
 					developerConnection = 'scm:git:git@github.com:almondtools/fluent-allotropy.git'
-					url = 'git@github.com:almondtools/fluent-allotropy.git'
+					url = 'https://github.com/almondtools/fluent-allotropy'
 	            }
 	        }
-        }
-    }
-	repositories {
-        maven {
-            name = 'sonatype'
-            credentials(PasswordCredentials)
         }
     }
 }
 
 signing {
-	sign publishing.publications.mavenJava
+    useGpgCmd()
+    sign publishing.publications.mavenJava
 }
+
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
