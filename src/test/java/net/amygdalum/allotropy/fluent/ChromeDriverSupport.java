@@ -43,6 +43,7 @@ public class ChromeDriverSupport implements BeforeEachCallback {
                 field.set(instance, server.webDriver());
             }
         }
+        server.reset();
     }
 
     private WebDriverContainer start() {
@@ -56,7 +57,6 @@ public class ChromeDriverSupport implements BeforeEachCallback {
             options.addArguments("disable-gpu");
         }
         ChromeDriver driver = new ChromeDriver(options);
-        driver.manage().window().setSize(new Dimension(600, 400));
         return new WebDriverContainer(driver);
     }
 
@@ -69,10 +69,15 @@ public class ChromeDriverSupport implements BeforeEachCallback {
 
     private record WebDriverContainer(WebDriver webDriver) implements Store.CloseableResource {
 
-        @Override
+		public void reset() {
+	        webDriver.manage().window().setSize(new Dimension(600, 400));
+		}
+
+		@Override
         public void close() throws Throwable {
             webDriver.close();
         }
+
 
     }
 }
